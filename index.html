@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gradovi Svjeta</title>
+  </head>
+  <style>
+    table,
+    th,
+    td {
+      border: 1px solid black;
+    }
+  </style>
+  <body>
+    <table id="table">
+      <tr>
+        <th>ID</th>
+        <th>Grad</th>
+        <th>Broj Stanovnika</th>
+      </tr>
+      <tr>
+        <td>Sarajevo</td>
+      </tr>
+      <tr>
+        <td>Bec</td>
+      </tr>
+      <tr>
+        <td>Lisabon</td>
+      </tr>
+      <tr>
+        <td>Beograd</td>
+      </tr>
+    </table>
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script>
+    var table = document.getElementById("table");
+
+    $.get("http://localhost:3000/gradovi", function (data) {
+      var tableData = `
+      <tr>
+        <th>ID</th>
+        <th>Grad</th>
+        <th>Broj Stanovnika</th>
+      </tr>
+      `;
+
+      tableData += data
+        .map((x) => {
+          return `
+        <tr>
+          <td>${x.ID}</td>
+          <td>${x.naziv}</td>
+          <td>${x.broj_stanovnika}</td>
+        </tr>`;
+        })
+        .join("");
+
+      table.innerHTML = tableData;
+    });
+  </script>
+</html>
